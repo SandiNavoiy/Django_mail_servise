@@ -41,7 +41,7 @@
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
-                        <a href="{% url 'send_mail:index' %}" class="nav-link active" aria-current="page">
+                        <a href="{% url 'mailing:index' %}" class="nav-link active" aria-current="page">
                             <svg class="bi pe-none me-2" width="16" height="16">
                                 <use xlink:href="#home"></use>
                             </svg>
@@ -57,14 +57,7 @@
                         </a>
                     </div>
                     <li>
-                        <div class="container">
-                            <a href="{% url 'send_mail:mailing_list' %}" class="nav-link text-white">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="{% url 'send_mail:mailing_list' %}"></use>
-                                </svg>
-                                Рассылки
-                            </a>
-                        </div>
+
 
                     </li>
 
@@ -99,14 +92,7 @@
 
 
                         <li>
-                        <div class="container">
-                            <a href="/categorii" class="nav-link text-white">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="/categorii"></use>
-                                </svg>
-                                Просмотр списка категорий
-                            </a>
-                        </div>
+
                     {% endif %}
                     </li>
 
@@ -181,7 +167,7 @@
 
 
     </div>
-    {% include 'send_mail/inc.html' %} {# подключение подшаблона #}
+    {% include 'mailing/inc.html' %} {# подключение подшаблона #}
 </div>
 
 

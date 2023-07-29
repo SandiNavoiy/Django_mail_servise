@@ -71,7 +71,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdate
     template_name = "users/update_user.html"
-    success_url = reverse_lazy('send_mail:index')
+    success_url = reverse_lazy('mailing:index')
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -85,7 +85,7 @@ def gen_pass(request):
     request.user.save()
     send_mail('Ваш пароль изменен',
               f"Ваш пароль: {new_password} обязательно поменяйте его", 'noreply@oscarbot.ru', [request.user.email])
-    return redirect('send_mail:index')
+    return redirect('mailing:index')
 
 
 class UserForgotPasswordView(SuccessMessageMixin, PasswordResetView):
@@ -94,7 +94,7 @@ class UserForgotPasswordView(SuccessMessageMixin, PasswordResetView):
     """
     form_class = UserForgotPasswordForm
     template_name = 'users/user_password_reset.html'
-    success_url = reverse_lazy('send_mail:index')
+    success_url = reverse_lazy('mailing:index')
     success_message = 'Письмо с инструкцией по восстановлению пароля отправлена на ваш email'
     subject_template_name = 'users/password_subject_reset_mail.txt'
     email_template_name = 'users/password_reset_mail.html'
@@ -111,7 +111,7 @@ class UserPasswordResetConfirmView(SuccessMessageMixin, PasswordResetConfirmView
     """
     form_class = UserSetNewPasswordForm
     template_name = 'users/user_password_set_new.html'
-    success_url = reverse_lazy('send_mail:index')
+    success_url = reverse_lazy('mailing:index')
     success_message = 'Пароль успешно изменен. Можете авторизоваться на сайте.'
 
     def get_context_data(self, **kwargs):

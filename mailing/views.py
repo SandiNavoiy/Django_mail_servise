@@ -1,14 +1,24 @@
-# Create your views here.
-from django.views.generic import TemplateView
+from datetime import datetime
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
+from django.forms import inlineformset_factory
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, CreateView, DeleteView, ListView, UpdateView
 
 from blog.models import BlogPost
+from client.forms import ClientForm
 from client.models import MailingClient
-from mailing.models import Mail, MailingSettings
+from config import settings
+from mailing.forms import SettingsForm, MailForm
+from mailing.models import Mail, MailingSettings, MailingTry
 
 
-class HomePage(TemplateView):
+class Home(TemplateView):
     '''Домашняя страница'''
-    template_name = "home_page.html"
+    template_name = "mailing/index.html"
 
     def get_context_data(self, **kwargs):
         context = {}
@@ -22,11 +32,11 @@ class HomePage(TemplateView):
         context['random_article'] = random_article
         return context
 
-class MailingCreateView(LoginRequiredMixin, generic.CreateView):
+class MailingCreateView(LoginRequiredMixin, CreateView):
     '''Контроллер создания рассылки'''
     template_name = "mailing/mail_form.html"
-    model = models.MailingSettings
-    form_class = forms.SettingsForm
+    model = MailingSettings
+    form_class = SettingsForm
     success_url = reverse_lazy('mailing:homepage')
     mail_data = ''
     mail_status = 'OK'
@@ -34,7 +44,7 @@ class MailingCreateView(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, **kwargs):
         '''Функция получения контекстных данных и создания подформы с сообщением'''
         context_data = super().get_context_data(**kwargs)
-        MailFormset = inlineformset_factory(models.MailingSettings, models.Mail, form=forms.MailForm, can_delete=False,
+        MailFormset = inlineformset_factory(MailingSettings, Mail, form=MailForm, can_delete=False,
                                             extra=1)
         if self.request.method == 'POST':
             context_data['formset'] = MailFormset(self.request.POST or None, instance=self.object)
@@ -100,7 +110,7 @@ class MailingCreateView(LoginRequiredMixin, generic.CreateView):
                 self.object.mailing_status = 'FI'
                 self.object.save()
 
-            models.MailingTry.objects.create(mailing=self.object, mailing_try=datetime.now(),
+            MailingTry.objects.create(mailing=self.object, mailing_try=datetime.now(),
                                              mailing_try_status=self.object.mailing_status,
                                              mailing_response=self.mail_status)
             return super().form_valid(form)
@@ -109,10 +119,10 @@ class MailingCreateView(LoginRequiredMixin, generic.CreateView):
             return super(MailingCreateView, self).form_invalid(form)
 
 
-class MailingListView(LoginRequiredMixin, generic.ListView):
+class MailingListView(LoginRequiredMixin, ListView):
     '''Контроллер списка рассылок'''
     template_name = "mailing/mail_list.html"
-    model = models.Mail
+    model = Mail
     paginate_by = 10
     extra_context = {
         'title': 'Мои рассылки'
@@ -129,9 +139,9 @@ class MailingListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
-class MailingDeleteView(LoginRequiredMixin, generic.DeleteView):
+class MailingDeleteView(LoginRequiredMixin, DeleteView):
     '''Контроллер для удаления рассылки'''
-    model = models.Mail
+    model = Mail
     success_url = reverse_lazy('mailing:mailing')
 
     def delete(self, request, *args, **kwargs):
@@ -146,11 +156,11 @@ class MailingDeleteView(LoginRequiredMixin, generic.DeleteView):
         return redirect(self.success_url)
 
 
-class MailingUsersCreateView(LoginRequiredMixin, generic.CreateView):
+class MailingUsersCreateView(LoginRequiredMixin, CreateView):
     '''Контроллер для создания получателей рассылки'''
     template_name = "mailing/create_clients.html"
-    model = models.MailingClient
-    form_class = forms.MailingClientForm
+    model = MailingClient
+    form_class = ClientForm
     success_url = reverse_lazy('mailing:homepage')
 
     def form_valid(self, form):
@@ -161,11 +171,11 @@ class MailingUsersCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
-class MailingUpdateView(LoginRequiredMixin, generic.UpdateView):
+class MailingUpdateView(LoginRequiredMixin, UpdateView):
     '''Контроллер для изменения рассылки. Все тоже самое, как и в создании, только с проверкой, что пользователь является автором'''
     template_name = "mailing/mail_form.html"
-    model = models.MailingSettings
-    form_class = forms.SettingsForm
+    model = MailingSettings
+    form_class = SettingsForm
     success_url = reverse_lazy('mailing:mailing')
     mail_data = ''
     mail_status = 'OK'
