@@ -3,7 +3,7 @@ from django.db import models
 NULLABLE = {'null': True, 'blank': True}  # флаг необязательности
 
 
-class Client(models.Model):
+class MailingClient(models.Model):
     """Жертвы рассылочного спама"""
     contact_email = models.EmailField(max_length=254, unique=True, verbose_name='контактный email')
     first_name = models.CharField(max_length=25, verbose_name='имя')
