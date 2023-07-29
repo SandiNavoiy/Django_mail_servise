@@ -11,3 +11,19 @@ def unique_slugify(instance, slug):
     while model.objects.filter(slug=unique_slug).exists():
         unique_slug = f'{unique_slug}-{uuid4().hex[:8]}'
     return unique_slug
+
+
+# def cached_for_blog():
+#     if CACHE_ENABLED:
+#         key = f'blog_post_list'
+#         object_list = cache.get(key)
+#
+#         if object_list is None:
+#             # Если данные не найдены в кеше, выполняем запрос к базе данных
+#             object_list = BlogPost.objects.all()
+#             # Кешируем результат на 1 час
+#             cache.set(key, object_list)
+#     else:
+#         object_list = BlogPost.objects.all()
+#
+#     return object_list
