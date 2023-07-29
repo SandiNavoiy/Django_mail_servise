@@ -14,6 +14,7 @@ class User(AbstractUser):
     comment = models.TextField(verbose_name='комментарий', **NULLABLE)
     first_name = models.CharField(max_length=25, verbose_name='имя')
     last_name = models.CharField(max_length=25, verbose_name='фамилия', **NULLABLE)
+    is_active = models.BooleanField(default=False, verbose_name='активный')
 
     # переопределение поля user  как основного для идентификации на емаил
     USERNAME_FIELD = "email"
