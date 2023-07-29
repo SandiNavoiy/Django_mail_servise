@@ -242,3 +242,13 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
         except AttributeError:
             form.add_error(None, 'Установите дату рассылки.')
             return super(MailingUpdateView, self).form_invalid(form)
+
+
+class MailingTryListView(LoginRequiredMixin, ListView):
+    '''Статистика по отправкам'''
+    template_name = "mailing/log_view.html"
+    model = MailingTry
+    paginate_by = 10
+    extra_context = {
+        'title': 'Отчет по рассылкам'
+    }
