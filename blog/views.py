@@ -1,18 +1,16 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import Http404
 from django.urls import reverse_lazy, reverse
-from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from blog.forms import BlogPostForm
 from blog.models import BlogPost
 
 
-
 # Create your views here.
 class BlogListView(ListView):
+    """Вывод списка статей блога"""
     model = BlogPost
     template_name = 'blog/blog_post_list.html'
-
     paginate_by = 6
 
     def get_queryset(self):
@@ -21,9 +19,9 @@ class BlogListView(ListView):
 
 
 class BlogCreateView(LoginRequiredMixin, CreateView):
+    """Создание статьи блога"""
     model = BlogPost
     form_class = BlogPostForm
-
     login_url = 'users:login'
     redirect_field_name = 'redirect_to'
     template_name = 'blog/blog_post_create.html'
@@ -31,10 +29,12 @@ class BlogCreateView(LoginRequiredMixin, CreateView):
 
 
 class BlogDetailView(DetailView):
+    """Вывод конкретной информации по отлельной статье"""
     model = BlogPost
     template_name = 'blog/blog_post_detail.html'
 
     def get_object(self, queryset=None):
+        """Число просмотров"""
         self.object = super().get_object(queryset)
         self.object.views_count += 1
         self.object.save()
@@ -42,6 +42,7 @@ class BlogDetailView(DetailView):
 
 
 class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    """Обновление статьи блога"""
     model = BlogPost
     form_class = BlogPostForm
     permission_required = "blog.change_blogpost"
@@ -61,9 +62,8 @@ class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         return reverse('blog:detail', args=[self.object.slug])
 
 
-
-
 class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    """Удаление статьи блога"""
     model = BlogPost
     template_name = 'blog/blog_post_delete.html'
     permission_required = "blog.delete_blogpost"

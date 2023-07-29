@@ -19,6 +19,7 @@ class Home(TemplateView):
     template_name = "mailing/index.html"
 
     def get_context_data(self, **kwargs):
+        """Переопределяем вывод конкретных данынх в шаблон"""
         context = {}
         mails = Mail.objects.all().count()
         active = MailingSettings.objects.filter(mailing_status='AC').values_list().count(),
@@ -30,8 +31,9 @@ class Home(TemplateView):
         context['random_article'] = random_article
         return context
 
+
 class MailingCreateView(LoginRequiredMixin, CreateView):
-    '''Контроллер создания рассылки'''
+    """Контроллер создания рассылки"""
     template_name = "mailing/mail_form.html"
     model = MailingSettings
     form_class = SettingsForm
@@ -109,8 +111,8 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
                 self.object.save()
 
             MailingTry.objects.create(mailing=self.object, mailing_try=datetime.now(),
-                                             mailing_try_status=self.object.mailing_status,
-                                             mailing_response=self.mail_status)
+                                      mailing_try_status=self.object.mailing_status,
+                                      mailing_response=self.mail_status)
             return super().form_valid(form)
         except AttributeError:
             form.add_error(None, 'Установите дату рассылки.')
@@ -138,7 +140,7 @@ class MailingListView(LoginRequiredMixin, ListView):
 
 
 class MailingDeleteView(LoginRequiredMixin, DeleteView):
-    '''Контроллер для удаления рассылки'''
+    '''Удаление  рассылки'''
     model = Mail
     template_name = "mailing/mailing_delete.html"
     success_url = reverse_lazy('mailing:mailing_list')
@@ -152,10 +154,8 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
         return redirect(self.success_url)
 
 
-
-
 class MailingUpdateView(LoginRequiredMixin, UpdateView):
-    '''Контроллер для изменения рассылки. Все тоже самое, как и в создании, только с проверкой, что пользователь является автором'''
+    '''Контроллер для изменения рассылки. '''
     template_name = "mailing/mail_form_update.html"
     model = MailingSettings
     form_class = SettingsForm
@@ -205,7 +205,7 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
             formset.instance = self.object
             formset.save()
         self.object.save()
-        ct = datetime.now()
+        ct = datetime.now()  # текущая дата/время
 
         try:
             if self.object.mailing_time_start.timestamp() <= ct.timestamp() <= self.object.mailing_time_end.timestamp():
@@ -234,8 +234,8 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
                 self.object.save()
 
             MailingTry.objects.create(mailing=self.object, mailing_try=datetime.now(),
-                                             mailing_try_status=self.object.mailing_status,
-                                             mailing_response=self.mail_status)
+                                      mailing_try_status=self.object.mailing_status,
+                                      mailing_response=self.mail_status)
             return super().form_valid(form)
         except AttributeError:
             form.add_error(None, 'Установите дату рассылки.')

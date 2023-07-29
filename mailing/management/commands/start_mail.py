@@ -1,8 +1,6 @@
 from datetime import datetime, timedelta
-
 from django.core.mail import send_mail
 from django.core.management import BaseCommand
-
 from client.models import MailingClient
 from config import settings
 from mailing.models import Mail, MailingSettings, MailingTry

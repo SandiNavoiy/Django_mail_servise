@@ -1,9 +1,9 @@
 from django.forms import ModelForm, ModelMultipleChoiceField, DateTimeInput
-
 from client.models import MailingClient
 from mailing.models import Mail, MailingSettings
-
 from django import forms
+
+
 class MailForm(ModelForm):
     '''Форма для письма с переменной которая выводит в список и дает выбрать нескольких клиентов'''
     clients = MailingClient.objects.all()
@@ -27,7 +27,7 @@ class SettingsForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Получаем экземпляр модели из ключа 'instance' аргумента 'kwargs'
+        # для случая когда данные уже есть, чтобы не показывать виджет
         instance = kwargs.get('instance')
 
         if instance:
@@ -42,4 +42,3 @@ class SettingsForm(ModelForm):
             if mailing_time_end:
                 self.fields['mailing_time_end'].widget = forms.TextInput(
                     attrs={'value': mailing_time_end.strftime('%Y-%m-%dT%H:%M')})
-

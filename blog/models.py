@@ -2,10 +2,9 @@ from django.conf import settings
 from django.db import models
 from PIL import Image
 from django.urls import reverse
-
 from blog.services import unique_slugify
 
-# Create your models here.
+
 NULLABLE = {'null': True, 'blank': True}
 
 
@@ -19,6 +18,7 @@ class BlogPost(models.Model):
     views_count = models.IntegerField(default=0, verbose_name='счетчик просмотров')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь',
                              **NULLABLE)
+
     def __str__(self):
         return self.title
 
@@ -28,11 +28,10 @@ class BlogPost(models.Model):
             img = Image.open(self.preview_image.path)
             img.thumbnail((200, 200))  # Указываете желаемые размеры
             img.save(self.preview_image.path)
-        #замена slug на латиницу
+        # замена slug на латиницу
         if not self.slug:
             self.slug = unique_slugify(self, self.title)
         super().save(*args, **kwargs)
-
 
     def get_absolute_url(self):
         return reverse('blog_post_list', kwargs={'slug': self.slug})

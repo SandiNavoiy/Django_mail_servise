@@ -9,8 +9,7 @@ class MailingClient(models.Model):
     first_name = models.CharField(max_length=25, verbose_name='имя')
     last_name = models.CharField(max_length=25, verbose_name='фамилия')
     surname = models.CharField(max_length=25, verbose_name='отчество', **NULLABLE)
-    comment = models.TextField(verbose_name='комментарии',**NULLABLE)
-
+    comment = models.TextField(verbose_name='комментарии', **NULLABLE)
 
     def __str__(self):
         return f'Получатель {self.first_name} {self.last_name} {self.contact_email}'

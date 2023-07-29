@@ -1,5 +1,4 @@
 from django.urls import path
-
 from blog.apps import BlogConfig
 from blog.views import BlogListView, BlogDetailView, BlogDeleteView, BlogCreateView, BlogUpdateView
 
@@ -12,4 +11,3 @@ urlpatterns = [
     path('update/<slug:slug>/', BlogUpdateView.as_view(), name='update'),
 
 ]
-

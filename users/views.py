@@ -14,13 +14,13 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
 from django.views.generic import CreateView, UpdateView, TemplateView
 from django.utils.encoding import force_str
-
 from users.forms import UserForgotPasswordForm, UserSetNewPasswordForm
 from users.forms import UserRegisterForm, UserUpdate
 from users.models import User
 
 
 class RegisterView(CreateView):
+    """Регистрация"""
     model = User
     form_class = UserRegisterForm
     template_name = "users/register.html"
@@ -31,7 +31,6 @@ class RegisterView(CreateView):
         user = form.save(commit=False)
         user.is_active = False  # User will be activated after email verification
         user.save()
-
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         current_site = get_current_site(self.request)
         activation_link = reverse_lazy(
@@ -44,7 +43,6 @@ class RegisterView(CreateView):
         user.email_user(mail_subject, massage)
 
         return super().form_valid(form)
-
 
 
 def activate_account(request, uidb64):
@@ -60,14 +58,17 @@ def activate_account(request, uidb64):
 
 
 class ActivationOk(TemplateView):
+    """Активация успешна"""
     template_name = 'users/email_verification_done.html'
 
 
 class ActivationFailed(TemplateView):
+    """Активация не успешна"""
     template_name = 'users/email_verification_failed.html'
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
+    """Обновление юзера"""
     model = User
     form_class = UserUpdate
     template_name = "users/update_user.html"
@@ -75,7 +76,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
-
 
 
 def gen_pass(request):

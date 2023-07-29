@@ -6,8 +6,8 @@ from client.forms import ClientForm
 from client.models import MailingClient
 
 
-#Работа с получателями рассылок
-#---------------------------------------------------------------------------------
+# Работа с получателями рассылок
+# ---------------------------------------------------------------------------------
 class ClientCreateView(LoginRequiredMixin, CreateView):
     '''Создание получателя рассылки'''
     template_name = "client/create_clients.html"

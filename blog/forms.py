@@ -2,6 +2,7 @@ from django.utils.text import slugify
 from blog.models import BlogPost
 from django import forms
 class BlogPostForm(forms.ModelForm):
+    """Форма создания блога"""
     class Meta:
         model = BlogPost
         exclude = ['created_at', 'views_count', 'slug']
