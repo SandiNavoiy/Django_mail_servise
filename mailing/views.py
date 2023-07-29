@@ -158,10 +158,10 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
 
 class MailingUpdateView(LoginRequiredMixin, UpdateView):
     '''Контроллер для изменения рассылки. Все тоже самое, как и в создании, только с проверкой, что пользователь является автором'''
-    template_name = "mailing/mail_form.html"
+    template_name = "mailing/mail_form_update.html"
     model = MailingSettings
     form_class = SettingsForm
-    success_url = reverse_lazy('mailing:mailing')
+    success_url = reverse_lazy('mailing:mailing_list')
     mail_data = ''
     mail_status = 'OK'
 
@@ -173,7 +173,7 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        MailFormset = inlineformset_factory(models.MailingSettings, models.Mail, form=forms.MailForm, can_delete=False,
+        MailFormset = inlineformset_factory(MailingSettings, Mail, form=MailForm, can_delete=False,
                                             extra=0, edit_only=True)
         if self.request.method == 'POST':
             context_data['formset'] = MailFormset(self.request.POST or None, instance=self.object)
