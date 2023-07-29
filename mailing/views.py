@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
@@ -35,7 +35,7 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
     template_name = "mailing/mail_form.html"
     model = MailingSettings
     form_class = SettingsForm
-    success_url = reverse_lazy('mailing:homepage')
+    success_url = reverse_lazy('mailing:mailing_list')
     mail_data = ''
     mail_status = 'OK'
 
@@ -119,7 +119,7 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
 
 class MailingListView(LoginRequiredMixin, ListView):
     '''Контроллер списка рассылок'''
-    template_name = "mailing/mail_list.html"
+    template_name = "mailing/mailing_list.html"
     model = Mail
     paginate_by = 10
     extra_context = {
@@ -140,7 +140,7 @@ class MailingListView(LoginRequiredMixin, ListView):
 class MailingDeleteView(LoginRequiredMixin, DeleteView):
     '''Контроллер для удаления рассылки'''
     model = Mail
-    success_url = reverse_lazy('mailing:mailing')
+    success_url = reverse_lazy('mailing:mailing_list')
 
     def delete(self, request, *args, **kwargs):
         # Получаем объект рассылки

@@ -1,0 +1,38 @@
+{% extends 'mailing/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="col-md-9">
+        <div class="row">
+            <h1> Создание рассылки </h1>
+            <div class="col-md-4">
+                <h1 class="text-center title">Настройки рассылки</h1>
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <button type="submit">Создать</button>
+                    </div>
+
+
+            </div>
+            <div class="col-md-5">
+                <h1 class="text-center title">Тема и текст письма</h1>
+                {{ formset.management_form }}
+                {% for form in formset.forms %}
+                    <div class="card input">
+                        <div class="col">
+
+                            {{ form|crispy }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+     </form>
+    </div>
+
+
+{% endblock %}

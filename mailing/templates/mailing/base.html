@@ -57,6 +57,12 @@
                         </a>
                     </div>
                     <li>
+                        <a href="/mailing_list" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="/mailing_list"></use>
+                            </svg>
+                            Рассылки
+                        </a>
 
 
                     </li>
@@ -91,68 +97,68 @@
                     {% if user.is_superuser %}
 
 
-                        <li>
+                    <li>
 
-                    {% endif %}
+                        {% endif %}
                     </li>
 
 
                     <hr>
                     <li>
                         {% if user.is_authenticated %}
-                            <a class="nav-link text-white">
-                                <svg class="bi pe-none me-2" width="16" height="16">
+                        <a class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
 
-                                </svg>
-                                Вы вошли как:<br>
-                                {{ user.first_name }}, {{ user.email }}
-                                <div class="nav-link text-white">
-                                    <svg class="bi pe-none me-2" width="16" height="16">
-                                    </svg>
-                                    {% if user.is_superuser %}
-                                        <font color="red" size="4">Внимание</font>
-                                        <br>
-                                        <font color="red">Режим администратора</font>
-                                    {% endif %}
-                                </div>
-                            </a>
-                            <a href="{% url 'users:logout' %}" class="nav-link text-white">
+                            </svg>
+                            Вы вошли как:<br>
+                            {{ user.first_name }}, {{ user.email }}
+                            <div class="nav-link text-white">
                                 <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="{% url 'users:logout' %}"></use>
                                 </svg>
-                                Выход
-                            </a>
-                            <a href="{% url 'users:update' %}" class="nav-link text-white">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="{% url 'users:update' %}"></use>
-                                </svg>
-                                Профиль
-                            </a>
-                            <a href="{% url 'users:gen_pass' %}" class="nav-link text-white">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="{% url 'users:gen_pass' %}"></use>
-                                </svg>
-                                Сбросить пароль
-                            </a>
+                                {% if user.is_superuser %}
+                                <font color="red" size="4">Внимание</font>
+                                <br>
+                                <font color="red">Режим администратора</font>
+                                {% endif %}
+                            </div>
+                        </a>
+                        <a href="{% url 'users:logout' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:logout' %}"></use>
+                            </svg>
+                            Выход
+                        </a>
+                        <a href="{% url 'users:update' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:update' %}"></use>
+                            </svg>
+                            Профиль
+                        </a>
+                        <a href="{% url 'users:gen_pass' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:gen_pass' %}"></use>
+                            </svg>
+                            Сбросить пароль
+                        </a>
                         {% else %}
-                            <a href="{% url 'users:login' %}" class="nav-link text-white">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="{% url 'users:login' %}"></use>
-                                </svg>
-                                Войти
-                            </a>
-                            <a href="{% url 'users:password_reset' %}" class="nav-link text-white">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="{% url 'users:password_reset' %}"></use>
-                                </svg>
-                                Востановление пароля
-                            </a>
-                            <a href="{% url 'users:register' %}" class="nav-link text-white">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="{% url 'users:register' %}"></use>
-                                </svg>
-                                Регистрация
-                            </a>
+                        <a href="{% url 'users:login' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:login' %}"></use>
+                            </svg>
+                            Войти
+                        </a>
+                        <a href="{% url 'users:password_reset' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:password_reset' %}"></use>
+                            </svg>
+                            Востановление пароля
+                        </a>
+                        <a href="{% url 'users:register' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:register' %}"></use>
+                            </svg>
+                            Регистрация
+                        </a>
 
                         {% endif %}
                     </li>

@@ -1,0 +1,21 @@
+{% extends 'mailing/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="col-md-9">
+
+        <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+            <h1>  Удаление рассылки </h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class="btn btn-danger" type="submit">Удалить</button>
+                <a class="btn btn-secondary blog m-2" href={% url 'mailing:mailing_list' %}>отмена</a>
+
+            </form>
+
+        </div>
+    </div>
+
+
+{% endblock %}
