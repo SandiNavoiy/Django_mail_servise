@@ -21,3 +21,20 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'клиент'
         verbose_name_plural = 'клиенты'
+
+    class StatusType(models.Model):
+        '''Класс для определения роли пользователя'''
+        MANAGER = "MANAGER"
+        BASE_USER = "BASE_USER"
+        CONTENT_MANAGER = "CONTENT_MANAGER"
+        STATUS = [
+            (MANAGER, "Manager"),
+            (BASE_USER, "Base_user"),
+            (CONTENT_MANAGER, "Content_manager"),
+        ]
+
+    status_type = models.CharField(
+        max_length=50,
+        choices=StatusType.STATUS,
+        default=StatusType.BASE_USER,
+        verbose_name="роль")
