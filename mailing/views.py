@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
@@ -7,9 +7,7 @@ from django.forms import inlineformset_factory
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, DeleteView, ListView, UpdateView
-
 from blog.models import BlogPost
-from client.forms import ClientForm
 from client.models import MailingClient
 from config import settings
 from mailing.forms import SettingsForm, MailForm
@@ -156,19 +154,6 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
         return redirect(self.success_url)
 
 
-class MailingUsersCreateView(LoginRequiredMixin, CreateView):
-    '''Контроллер для создания получателей рассылки'''
-    template_name = "mailing/create_clients.html"
-    model = MailingClient
-    form_class = ClientForm
-    success_url = reverse_lazy('mailing:homepage')
-
-    def form_valid(self, form):
-        self.object = form.save()
-        self.object.author = self.request.user
-        self.object.save()
-
-        return super().form_valid(form)
 
 
 class MailingUpdateView(LoginRequiredMixin, UpdateView):

@@ -1,4 +1,4 @@
-{% extends 'send_mail/base.html' %}
+{% extends 'mailing/base.html' %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -7,11 +7,11 @@
         <div class="d-flex flex-column  justify-content-center align-items-center">
             <h1> Подробнее о получателе рассылки </h1>
 
-                <h5 class="card-title">EMAIL клиента:<br>{{ object.email }}</h5>
+                <h5 class="card-title">EMAIL клиента:<br>{{ object.contact_email }}</h5>
                 <p class="card-text">Имя клиента:<br>{{ object.first_name }} </p>
                 <p class="card-text">Фамилия клиента:<br>{{ object.last_name }} </p>
-                <a class="btn btn-outline-danger blog m-2" href={% url 'send_mail:client_delete' object.pk %}>Удалить</a>
-                <a class="btn btn-outline-primary blog m-2" href={% url 'send_mail:client_update' object.pk %}>Редактировать</a>
+                <a class="btn btn-outline-danger blog m-2" href={% url 'client:client_delete' object.pk %}>Удалить</a>
+                <a class="btn btn-outline-primary blog m-2" href={% url 'client:client_update' object.pk %}>Редактировать</a>
 
 
         </div>

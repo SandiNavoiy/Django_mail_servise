@@ -1,20 +1,20 @@
-{% extends 'send_mail/base.html' %}
+{% extends 'mailing/base.html' %}
 {% load crispy_forms_tags %}
 
 {% block content %}
     <div class="col-md-9">
-        <div class="d-flex flex-column  justify-content-center align-items-center">
+        <div class="d-flex flex-column  contact_email align-items-center">
             <h1> Список клиентов рассылки </h1>
             <br>
-            <a class="btn btn-outline-success " href={% url 'send_mail:client_create' %}>Cоздать клиента</a>
+            <a class="btn btn-outline-success " href={% url 'client:client_create' %}>Cоздать клиента</a>
             <hr>
             <div class="row">
                 {% for object in object_list %}
 
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <div class="card-body">
-                            <h5 class="card-title">EMAIL клиента:<br>{{ object.email }}</h5>
-                            <a class="detail" type="submit" href={% url 'send_mail:client_detail' object.pk %}><p>
+                            <h5 class="card-title">EMAIL клиента:<br>{{ object.contact_email }}</h5>
+                            <a class="detail" type="submit" href={% url 'client:client_detail' object.pk %}><p>
                                 Подробнее...</p></a>
                         </div>
                     </div>

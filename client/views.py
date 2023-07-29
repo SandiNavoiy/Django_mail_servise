@@ -10,23 +10,23 @@ from client.models import MailingClient
 #---------------------------------------------------------------------------------
 class ClientCreateView(LoginRequiredMixin, CreateView):
     '''Создание получателя рассылки'''
-    template_name = "send_mail/create_clients.html"
+    template_name = "client/create_clients.html"
     model = MailingClient
     form_class = ClientForm
-    success_url = reverse_lazy('send_mail:client_list')
+    success_url = reverse_lazy('client:client_list')
 
 
 class ClientListView(ListView):
     """Вывод списка получатеелй рассылки"""
     model = MailingClient
-    template_name = 'send_mail/сlient_list.html'
+    template_name = 'client/сlient_list.html'
     paginate_by = 6
 
 
 class ClientsDetailView(DetailView):
     """Получение детальной информации по получателю рассылки"""
     model = MailingClient
-    template_name = 'send_mail/сlient_deteil.html'
+    template_name = 'client/сlient_deteil.html'
     context_object_name = 'item'
     pk_url_kwarg = 'pk'
 
@@ -34,17 +34,17 @@ class ClientsDetailView(DetailView):
 class ClientDeleteView(DeleteView):
     """Удаление получателя рассылки"""
     model = MailingClient
-    template_name = 'send_mail/delete_client.html'
-    success_url = reverse_lazy('send_mail:client_list')
+    template_name = 'client/delete_client.html'
+    success_url = reverse_lazy('client:client_list')
 
 
 class ClientUpdateView(UpdateView):
     """Изменение данных получателя рассылки"""
     model = MailingClient
     form_class = ClientForm
-    template_name = 'send_mail/update_form.html'
+    template_name = 'client/update_form.html'
 
     def get_success_url(self) -> str:
         """Изменение url (заглушка)"""
         new_url = slugify(self.object.pk)
-        return reverse('send_mail:client_detail', args=[new_url])
+        return reverse('client:client_detail', args=[new_url])

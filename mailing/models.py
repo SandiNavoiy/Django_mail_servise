@@ -1,18 +1,18 @@
-
 from django.db import models
+from django.db.models import TextChoices
 from blog.models import NULLABLE
 from client.models import MailingClient
 from config.settings import AUTH_USER_MODEL
 
 
-class Status(models.TextChoices):
+class Status(TextChoices):
     '''Возможный статус рассылки'''
     ACTIVE = 'AC', 'Active'
     FINISHED = 'FI', 'Finished'
     CREATED = 'CR', 'Created'
 
 
-class Periods(models.TextChoices):
+class Periods(TextChoices):
     '''Возможные  периодичности рассылки'''
     DAILY = 'DL', 'Daily'
     WEEKLY = 'WL', 'Weekly'

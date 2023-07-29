@@ -66,9 +66,9 @@
                     </li>
                     <li>
                         <div class="container">
-                            <a href="/client_list" class="nav-link text-white">
+                            <a href="{% url 'client:client_list' %}" class="nav-link text-white">
                                 <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="/client_list"></use>
+                                    <use xlink:href="{% url 'client:client_list' %}"></use>
                                 </svg>
                                 Получатели рассылки
                             </a>
