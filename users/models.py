@@ -23,7 +23,7 @@ class User(AbstractUser):
         verbose_name_plural = 'клиенты'
 
     class StatusType(models.Model):
-        '''Класс для определения роли пользователя'''
+        '''Подкласс для определения роли пользователя'''
         MANAGER = "MANAGER"
         BASE_USER = "BASE_USER"
         CONTENT_MANAGER = "CONTENT_MANAGER"
@@ -32,6 +32,7 @@ class User(AbstractUser):
             (BASE_USER, "Base_user"),
             (CONTENT_MANAGER, "Content_manager"),
         ]
+
 
     status_type = models.CharField(
         max_length=50,
