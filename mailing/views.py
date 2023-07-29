@@ -140,17 +140,15 @@ class MailingListView(LoginRequiredMixin, ListView):
 class MailingDeleteView(LoginRequiredMixin, DeleteView):
     '''Контроллер для удаления рассылки'''
     model = Mail
+    template_name = "mailing/mailing_delete.html"
     success_url = reverse_lazy('mailing:mailing_list')
 
     def delete(self, request, *args, **kwargs):
         # Получаем объект рассылки
         self.object = self.get_object()
-
         # Удаляем рассылку
         self.object.delete()
-
         messages.success(request, 'Рассылка успешно удалена.')
-
         return redirect(self.success_url)
 
 

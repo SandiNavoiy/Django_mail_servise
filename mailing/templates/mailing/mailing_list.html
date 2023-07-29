@@ -16,11 +16,6 @@
                     <h5 class="card-title">Тема письма:<br>{{ object.mailing_subject }}</h5>
                     <p class="card-text">Текст письма:<br>{{ object.mailing_body|truncatechars:20 }} </p>
 
-                    <h1>получатели рассылки:</h1>
-                    {% if object.client is not None %}
-                    <p class="lead fw-normal">{{ object.client_to_message }}.</p>
-
-                    {% endif %}
                     <a class="btn btn-outline-danger" href="{% url 'mailing:mailing_update' pk=object.pk %}"
                        role="button">изменить</a>
 
