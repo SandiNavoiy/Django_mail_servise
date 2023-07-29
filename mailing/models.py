@@ -39,7 +39,7 @@ class MailingSettings(models.Model):
 
 class Mail(models.Model):
     '''Письмо рассылки'''
-    client_to_message = models.ManyToManyField(MailingClient, verbose_name='Клиенты', **NULLABLE,
+    client_to_message = models.ManyToManyField(MailingClient, verbose_name='Клиенты',
                                                related_name='client_to_message')
     settings = models.ForeignKey(MailingSettings, on_delete=models.CASCADE)
     mailing_subject = models.CharField(max_length=255, verbose_name='тема письма')
