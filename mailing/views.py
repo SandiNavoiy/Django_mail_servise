@@ -250,7 +250,7 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
                 self.object.mailing_status = 'FI'
                 self.object.save()
 
-            models.MailingTry.objects.create(mailing=self.object, mailing_try=datetime.now(),
+            MailingTry.objects.create(mailing=self.object, mailing_try=datetime.now(),
                                              mailing_try_status=self.object.mailing_status,
                                              mailing_response=self.mail_status)
             return super().form_valid(form)
