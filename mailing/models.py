@@ -1,7 +1,8 @@
-from django.conf.global_settings import AUTH_USER_MODEL
+
 from django.db import models
 from blog.models import NULLABLE
 from client.models import MailingClient
+from config.settings import AUTH_USER_MODEL
 
 
 class Status(models.TextChoices):
