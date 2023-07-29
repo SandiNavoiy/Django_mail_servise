@@ -1,4 +1,6 @@
-from django.contrib.auth import admin
+from django.contrib import admin
+
+from mailing.models import MailingSettings, Mail
 
 
 @admin.register(MailingSettings)
