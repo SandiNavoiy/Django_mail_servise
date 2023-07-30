@@ -57,14 +57,13 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     """Обновление статьи блога"""
     model = BlogPost
     form_class = BlogPostForm
-    permission_required = "blog.change_blogpost"
+
     template_name = 'blog/blog_post_form.html'
-    login_url = 'users:login'
-    redirect_field_name = 'redirect_to'
+
 
     def dispatch(self, request, *args, **kwargs):
         """проверка что редактирование доступно владельцу или модератору или root"""
@@ -78,13 +77,11 @@ class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         return reverse('blog:detail', args=[self.object.slug])
 
 
-class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     """Удаление статьи блога"""
     model = BlogPost
     template_name = 'blog/blog_post_delete.html'
-    permission_required = "blog.delete_blogpost"
-    login_url = 'users:login'
-    redirect_field_name = 'redirect_to'
+
     success_url = reverse_lazy('blog:blog_post_list')
 
     def dispatch(self, request, *args, **kwargs):

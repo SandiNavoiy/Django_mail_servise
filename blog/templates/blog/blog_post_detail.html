@@ -24,12 +24,12 @@
             </div>
             <p class="mb-1">Дата создания: {{ object.created_at }}</p>
             <p class="mb-1">Количество просмотров: {{ object.views_count }}</p>
-            {% if perms.blog.delete_blogpost %}
+
                 <a class="btn btn-outline-danger blog m-2" href={% url 'blog:delete' object.slug %}>Удалить</a>
-            {% endif %}
-            {% if perms.blog.change_blogpost %}
+
+
                 <a class="btn btn-outline-primary blog m-2" href={% url 'blog:update' object.slug %}>Изменить</a>
-            {% endif %}
+
         </div>
 
     </div>
