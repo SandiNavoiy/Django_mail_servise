@@ -16,13 +16,14 @@ class BlogPost(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
     is_published = models.BooleanField(default=True, verbose_name='статус публикации')
     views_count = models.IntegerField(default=0, verbose_name='счетчик просмотров')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь',
-                             **NULLABLE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь')
 
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
+
+
         super().save(*args, **kwargs)
         if self.preview_image:
             img = Image.open(self.preview_image.path)

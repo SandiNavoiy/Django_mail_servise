@@ -5,7 +5,7 @@ class BlogPostForm(forms.ModelForm):
     """Форма создания блога"""
     class Meta:
         model = BlogPost
-        exclude = ['created_at', 'views_count', 'slug']
+        exclude = ['created_at', 'views_count', 'slug', 'user']
 
     def clean_title(self):
         """метод валидации по запрерщенным словам"""

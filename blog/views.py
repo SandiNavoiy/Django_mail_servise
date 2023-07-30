@@ -37,6 +37,11 @@ class BlogCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     template_name = 'blog/blog_post_create.html'
     success_url = reverse_lazy('blog:blog_post_list')  # редирект
+    def form_valid(self, form):
+
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 
 class BlogDetailView(DetailView):
