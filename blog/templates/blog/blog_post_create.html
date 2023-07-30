@@ -1,0 +1,16 @@
+{% extends 'mailing/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="col-md-9">
+        <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+            <h1 class="text-center title">Создание записи</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit">Создать</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,182 @@
+<! —базовый шаблон —>
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Сервис рассылок send_mail</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+
+    <style>
+        html, body, .container-fluid, .row, .col-md-3 {
+            height: 100%;
+        }
+
+        {
+        %
+        static
+        'bootstrap/css/bootstrap.min.css'
+        %
+        }
+        .title {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-md-3">
+            <h1 class="visually-hidden">Меню управления</h1>
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark h-100" style="width: 280px;">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <svg class="bi pe-none me-2" width="40" height="50">
+                        <use xlink:href=""></use>
+                    </svg>
+                    Меню управления
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="{% url 'mailing:index' %}" class="nav-link active" aria-current="page">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="#home"></use>
+                            </svg>
+                            Главная страница
+                        </a>
+                    </li>
+                    <div class="container">
+                        <a href="{% url 'blog:blog_post_list' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'blog:blog_post_list' %}"></use>
+                            </svg>
+                            Блогосфера
+                        </a>
+                    </div>
+                    <li>
+                        {% if user.is_authenticated %}
+                        <div class="container">
+                            <a href="/mailing_list" class="nav-link text-white">
+                                <svg class="bi pe-none me-2" width="16" height="16">
+                                    <use xlink:href="/mailing_list"></use>
+                                </svg>
+                                Рассылки
+                            </a>
+                        </div>
+                        {% endif %}
+
+                    </li>
+
+
+                    <li>
+
+                    </li>
+                    <li>
+                        {% if user.is_authenticated %}
+                        <div class="container">
+                            <a href="{% url 'client:client_list' %}" class="nav-link text-white">
+                                <svg class="bi pe-none me-2" width="16" height="16">
+                                    <use xlink:href="{% url 'client:client_list' %}"></use>
+                                </svg>
+                                Получатели рассылки
+                            </a>
+                        </div>
+                        {% endif %}
+                    </li>
+
+                    <li>
+                        {% if user.status_type == 'MANAGER' or user.is_superuser%}
+                        <div class="container">
+                            <a href="/mailing_report" class="nav-link text-white">
+                                <svg class="bi pe-none me-2" width="16" height="16">
+                                    <use xlink:href="/mailing_report"></use>
+                                </svg>
+                                Отчет по рассылкам
+                            </a>
+                        </div>
+                        {% endif %}
+                    </li>
+
+                    <hr>
+                    <li>
+                        {% if user.is_authenticated %}
+                        <a class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+
+                            </svg>
+                            Вы вошли как:<br>
+                            {{ user.first_name }}, {{ user.email }}
+                            {% if  not user.is_active %}
+                            <font color="red" size="4">Внимание, вы деактивированы</font>
+                            {% endif %}
+
+                            <div class="nav-link text-white">
+                                <svg class="bi pe-none me-2" width="16" height="16">
+                                </svg>
+                                {% if user.is_superuser %}
+                                <font color="red" size="4">Внимание</font>
+                                <br>
+                                <font color="red">Режим администратора</font>
+                                {% endif %}
+                            </div>
+                        </a>
+                        <a href="{% url 'users:logout' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:logout' %}"></use>
+                            </svg>
+                            Выход
+                        </a>
+                        <a href="{% url 'users:update' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:update' %}"></use>
+                            </svg>
+                            Профиль
+                        </a>
+                        <a href="{% url 'users:gen_pass' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:gen_pass' %}"></use>
+                            </svg>
+                            Сбросить пароль
+                        </a>
+                        {% else %}
+                        <a href="{% url 'users:login' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:login' %}"></use>
+                            </svg>
+                            Войти
+                        </a>
+                        <a href="{% url 'users:password_reset' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:password_reset' %}"></use>
+                            </svg>
+                            Востановление пароля
+                        </a>
+                        <a href="{% url 'users:register' %}" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="{% url 'users:register' %}"></use>
+                            </svg>
+                            Регистрация
+                        </a>
+
+                        {% endif %}
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+
+    </div>
+    {% include 'mailing/inc.html' %} {# подключение подшаблона #}
+</div>
+
+
+</body>
+</html>

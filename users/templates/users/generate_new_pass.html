@@ -1,0 +1,19 @@
+{% extends 'mailing/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="col-md-9">
+        <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+            <h1 class="text-center title">Востановление пароля</h1>
+            <<form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card">
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary mb-3">Сохранить</button>
+                <a class="btn btn-primary" href={% url 'users:gen_pass' %}>Отправить новый пароль на почту</a>
+            </div>
+        </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'mailing/base.html' %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="col-md-9">
+        <h2>Восстановление пароля</h2>
+        <form method="post" action="{% url 'users:gen_pass_unlog' email='' %}">
+            {% csrf_token %}
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" id="email" required>
+            <input type="submit" value="Сбросить пароль">
+        </form>
+    </div>
+{% endblock %}

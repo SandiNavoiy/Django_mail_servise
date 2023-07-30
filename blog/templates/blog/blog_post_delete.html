@@ -1,0 +1,21 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+    <div class="col-md-9">
+        <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+            <h1 class="text-center title">Удаление записи блога {{ object.title }}</h1>
+            <form method="post">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit">Удалить</button>
+                <a class="btn btn-secondary blog m-2" href={% url 'blog:detail' object.slug %}>отмена</a>
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'mailing/base.html' %}
+
+
+{% block content %}
+<div class="col-md-9">
+    <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+        <h1 class="text-center title">Список рассылок</h1>
+        {% if user.is_authenticated %}
+        <a class="btn btn-success " href={% url 'mailing:mailing_create' %}>создать рассылку</a>
+        {% endif %}
+        <div class="row">
+            <hr>
+            {% for object in object_list %}
+            {% if user.status_type == 'MANAGER' or user == object.settings.author or user.is_superuser%}
+            <div class="col-md-3">
+                <div class="card-body">
+                    <h5 class="card-title">Тема письма:<br>{{ object.mailing_subject }}</h5>
+                    <p class="card-text">Текст письма:<br>{{ object.mailing_body|truncatechars:20 }} </p>
+                    {% if user == object.settings.author  or user.is_superuser%}
+
+                    <a class="btn btn-outline-danger" href="{% url 'mailing:mailing_update' pk=object.pk %}"
+                       role="button">изменить</a>
+
+
+                    <a class="btn btn-outline-danger" href="{% url 'mailing:mailing_delete' pk=object.pk %}"
+                       role="button">Удалить рассылку</a>
+                    {% endif %}
+
+
+
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div class="pagination">
+                {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                {% endif %}
+                <span class="page-current">{{ page_obj.number }}</span>
+                {% if page_obj.has_next %}
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+

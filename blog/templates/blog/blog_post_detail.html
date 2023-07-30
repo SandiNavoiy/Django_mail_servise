@@ -1,0 +1,39 @@
+{% extends 'mailing/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="col-md-9">
+        <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+            <h1 class="text-center title">Записи в блогах</h1>
+            <div class="col">
+                {% if object.preview_image %}
+                    <img class="entry-preview" src="{{ object.preview_image.url }}"
+                         alt="...">
+                {% else %}
+                    <p> нет фото</p>
+                {% endif %}
+            </div>
+
+
+            <h4 class="title">Заголовок записи <br>{{ object.title }}</h4>
+            <h4 class="title mb-4">slug: {{ object.slug }}</h4>
+            <h4 class="title mb-4">автор {{ object.user }}</h4>
+            <h4 class="title mb-4"> текущий {{ user }}</h4>
+
+
+            <div class="col">
+                <p>{{ object.content }}</p>
+            </div>
+            <p class="mb-1">Дата создания: {{ object.created_at }}</p>
+            <p class="mb-1">Количество просмотров: {{ object.views_count }}</p>
+            {% if user == object.user or user.status_type == 'CONTENT_MANAGER' or user.is_superuser%}
+
+                <a class="btn btn-outline-danger blog m-2" href={% url 'blog:delete' object.slug %}>Удалить</a>
+
+
+                <a class="btn btn-outline-primary blog m-2" href={% url 'blog:update' object.slug %}>Изменить</a>
+            {%endif%}
+
+        </div>
+
+    </div>
+{% endblock %}

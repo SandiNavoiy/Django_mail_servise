@@ -1,0 +1,62 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+    <div class="col-md-9">
+
+        <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+            {% if user.is_authenticated %}
+                <h3 class="text-center title">{{ user.first_name }} - Добро пожаловать на сайт управления рассылок</h3>
+
+            {% else %}
+                <h3 class="text-center title">Добро пожаловать на сайт управления рассылок</h3>
+                <h3 class="text-center">Для использования полного функционала пожалуйста войдите в аккаунт</h3>
+            {% endif %}
+            <div class="row">
+                <hr>
+                <h3 class="text-center">Наша статистика</h3>
+                <div class="table-responsive">
+                    <table class="table text-center">
+                        <thead>
+                        <tr>
+                            <th>Количество рассылок</th>
+                            <th>Количество активных рассылок</th>
+                            <th>количество уникальных клиентов для рассылок</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{ mails }}</td>
+                            <td>{{ active }}</td>
+                            <td>{{ clients }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <h3 class="text-center">Статьи из блога</h3>
+                <div class="row">
+                    {% for article in random_article %}
+                        <div class="col-md-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Заголовок записи:<br>{{ article.title }}</h5>
+                                {% if article.preview_image %}
+                                    <img src="/img/{{ article.preview_image }}" class="img-fluid">
+                                    <rect width="20%" height="20%"></rect>
+                                {% else %}
+                                    <p> нет фото</p>
+                                {% endif %}
+                                <p class="lead fw-normal">Краткое содержание: <br>{{ article.content|truncatechars:20 }}.</p>
+                                <a class="btn btn-outline-secondary" href={% url 'blog:detail' article.slug %}>Читать
+                                    полностью</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'mailing/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="col-md-9">
+
+        <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+            <h1> Отчет по рассылкам </h1>
+            {% for object in object_list %}
+
+                    <div class="col-md-5 p-lg-5 mx-auto my-5">
+                        {{ object.mailing }}
+                        {{ object.mailing_try }}
+                        {{ object.mailing_try_status }}
+                        {{ object.mailing_response }}
+                    </div>
+
+
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

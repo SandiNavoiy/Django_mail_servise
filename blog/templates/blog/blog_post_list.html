@@ -1,0 +1,62 @@
+{% extends 'mailing/base.html' %}
+
+
+{% block content %}
+    <div class="col-md-9">
+    <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+        <h1 class="text-center title">Записи в блогах</h1>
+        {% if user.is_authenticated %}
+
+            <a class="btn btn-success " href={% url 'blog:create' %}>создать запись</a>
+        {% endif %}
+
+
+
+        <div class="row">
+
+            {% for object in object_list %}
+                <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="card mb-3" style="max-width: 1000px;">
+                        <div class="row g-0">
+                            <div class="col">
+                                <img class="entry-preview{max-width: 20px; max-height: 20px;}"
+                                        {% if object.preview_image %}
+                                     src="{{ object.preview_image.url }}" alt="...">
+                                        {% else %}
+                                            <p> нет фото</p>
+                                        {% endif %}
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Заголовок записи:<br>{{ object.title }}</h5>
+                                    <p class="card-text">Текст записи:<br>{{ object.content }} </p>
+                                    <p class="card-text">Создано:{{ object.created_at }} </p>
+                                    <p class="card-text">Количество просмотров:{{ object.views_count }} </p>
+
+                                    <a class="detail" type="submit" href={% url 'blog:detail' object.slug %}><p>
+                                        Подробнее...</p></a>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="pagination">
+                {% if is_paginated %}
+                    {% if page_obj.has_previous %}
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                    {% endif %}
+                    <span class="page-current">{{ page_obj.number }}</span>
+                    {% if page_obj.has_next %}
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
