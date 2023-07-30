@@ -4,7 +4,10 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from blog.forms import BlogPostForm
 from blog.models import BlogPost
-from blog.services import cached_for_blog
+from blog.utils import get_cached_for_blog_list
+
+
+# from blog.services import cached_for_blog
 
 
 # Create your views here.
@@ -18,12 +21,12 @@ class BlogListView(ListView):
         queryset = super().get_queryset().filter(is_published=True)
         return queryset
 
-    # def get_context_data(self, **kwargs):
-    #     """фунция вывода + сервисная прослойка для вывода"""
-    #     context_data = super().get_context_data()
-    #     context_data['blog_post_list'] = cached_for_blog
-    #     return context_data
-    #
+    def get_context_data(self, **kwargs):
+         """фунция вывода + сервисная прослойка для вывода"""
+         context_data = super().get_context_data()
+         context_data['object'] = get_cached_for_blog_list
+         return context_data
+
 
 
 class BlogCreateView(LoginRequiredMixin, CreateView):
