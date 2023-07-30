@@ -57,6 +57,7 @@
                         </a>
                     </div>
                     <li>
+                        {% if user.is_authenticated %}
                         <div class="container">
                             <a href="/mailing_list" class="nav-link text-white">
                                 <svg class="bi pe-none me-2" width="16" height="16">
@@ -65,7 +66,7 @@
                                 Рассылки
                             </a>
                         </div>
-
+                        {% endif %}
 
                     </li>
 
@@ -73,6 +74,7 @@
 
                     </li>
                     <li>
+                        {% if user.is_authenticated %}
                         <div class="container">
                             <a href="{% url 'client:client_list' %}" class="nav-link text-white">
                                 <svg class="bi pe-none me-2" width="16" height="16">
@@ -81,11 +83,11 @@
                                 Получатели рассылки
                             </a>
                         </div>
-
+                        {% endif %}
                     </li>
 
                     <li>
-
+                        {% if user.is_authenticated %}
                         <div class="container">
                             <a href="/mailing_report" class="nav-link text-white">
                                 <svg class="bi pe-none me-2" width="16" height="16">
@@ -94,16 +96,8 @@
                                 Отчет по рассылкам
                             </a>
                         </div>
-
-                    </li>
-                    {% if user.is_superuser %}
-
-
-                    <li>
-
                         {% endif %}
                     </li>
-
 
                     <hr>
                     <li>

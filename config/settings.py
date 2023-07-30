@@ -145,7 +145,7 @@ EMAIL_USE_SSL = True
 
 
 #кеширование
-CACHE_ENABLED = True
+CACHE_ENABLED = False
 if CACHE_ENABLED:
     CACHES = {
         "default": {
