@@ -18,4 +18,5 @@ urlpatterns = [
     path("gen_pass/", gen_pass, name="gen_pass"),
     path('password-reset/', UserForgotPasswordView.as_view(), name='password_reset'),
     path('set-new-password/<uidb64>/<token>/', UserPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+
 ]

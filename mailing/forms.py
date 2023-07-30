@@ -42,3 +42,5 @@ class SettingsForm(ModelForm):
             if mailing_time_end:
                 self.fields['mailing_time_end'].widget = forms.TextInput(
                     attrs={'value': mailing_time_end.strftime('%Y-%m-%dT%H:%M')})
+
+

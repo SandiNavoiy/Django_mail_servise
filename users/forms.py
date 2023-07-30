@@ -19,6 +19,7 @@ class UserUpdate(UserChangeForm):
         self.fields['password'].widget = forms.HiddenInput()
 
 
+
 class UserForgotPasswordForm(PasswordResetForm):
     """
     Запрос на восстановление пароля

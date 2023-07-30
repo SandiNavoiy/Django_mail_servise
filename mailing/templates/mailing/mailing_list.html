@@ -11,10 +11,12 @@
         <div class="row">
             <hr>
             {% for object in object_list %}
+            {% if user.status_type == 'MANAGER' or user == object.settings.author or user.is_superuser%}
             <div class="col-md-3">
                 <div class="card-body">
                     <h5 class="card-title">Тема письма:<br>{{ object.mailing_subject }}</h5>
                     <p class="card-text">Текст письма:<br>{{ object.mailing_body|truncatechars:20 }} </p>
+                    {% if user == object.settings.author  or user.is_superuser%}
 
                     <a class="btn btn-outline-danger" href="{% url 'mailing:mailing_update' pk=object.pk %}"
                        role="button">изменить</a>
@@ -22,10 +24,13 @@
 
                     <a class="btn btn-outline-danger" href="{% url 'mailing:mailing_delete' pk=object.pk %}"
                        role="button">Удалить рассылку</a>
+                    {% endif %}
+
 
 
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
             <div class="pagination">
                 {% if is_paginated %}

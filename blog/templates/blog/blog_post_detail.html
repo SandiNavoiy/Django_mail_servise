@@ -17,6 +17,7 @@
             <h4 class="title">Заголовок записи <br>{{ object.title }}</h4>
             <h4 class="title mb-4">slug: {{ object.slug }}</h4>
             <h4 class="title mb-4">автор {{ object.user }}</h4>
+            <h4 class="title mb-4"> текущий {{ user }}</h4>
 
 
             <div class="col">
@@ -24,11 +25,13 @@
             </div>
             <p class="mb-1">Дата создания: {{ object.created_at }}</p>
             <p class="mb-1">Количество просмотров: {{ object.views_count }}</p>
+            {% if user == object.user or user.status_type == 'CONTENT_MANAGER' or user.is_superuser%}
 
                 <a class="btn btn-outline-danger blog m-2" href={% url 'blog:delete' object.slug %}>Удалить</a>
 
 
                 <a class="btn btn-outline-primary blog m-2" href={% url 'blog:update' object.slug %}>Изменить</a>
+            {%endif%}
 
         </div>
 
