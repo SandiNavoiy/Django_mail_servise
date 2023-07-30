@@ -109,7 +109,7 @@
                             </svg>
                             Вы вошли как:<br>
                             {{ user.first_name }}, {{ user.email }}
-                            {% if not user.is_is_active %}
+                            {% if  not user.is_active %}
                             <font color="red" size="4">Внимание, вы деактивированы</font>
                             {% endif %}
 
