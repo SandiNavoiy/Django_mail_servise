@@ -1,4 +1,4 @@
-D:\python\New_Kurs_6
+@echo off
 
 set "VIRTUAL_ENV=D:\python\New_Kurs_6\venv"
 
@@ -38,4 +38,4 @@ if defined _OLD_VIRTUAL_PATH goto ENDIFVPATH2
 
 set "PATH=%VIRTUAL_ENV%\Scripts;%PATH%"
 
-.\python manage.py start_mail
+python "D:\python\New_Kurs_6\manage.py" start_mail
