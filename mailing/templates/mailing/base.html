@@ -88,7 +88,7 @@
                     </li>
 
                     <li>
-                        {% if user.status_type == 'MANAGER' or user.is_superuser%}
+                        {% if user.is_authenticated %}
                         <div class="container">
                             <a href="/mailing_report" class="nav-link text-white">
                                 <svg class="bi pe-none me-2" width="16" height="16">
